@@ -315,7 +315,9 @@
         </div>
         <div class="hero-product-visual" aria-hidden="true">
           <div class="hero-video-crop">
-            <video class="hero-app-video" autoplay muted loop playsinline disablepictureinpicture preload="none" poster="Ref/optimized/video/ville-app-preview-poster-640.webp" width="640" height="718" data-video-src="Ref/optimized/video/ville-app-preview-640.mp4"></video>
+            <video class="hero-app-video" autoplay muted defaultmuted loop playsinline webkit-playsinline disablepictureinpicture preload="auto" poster="Ref/optimized/video/ville-app-preview-poster-640.webp" width="640" height="718" src="Ref/optimized/video/ville-app-preview-640.mp4">
+              <source src="Ref/optimized/video/ville-app-preview-640.mp4" type="video/mp4">
+            </video>
           </div>
           <img class="hero-felt" src="Ref/optimized/felt-icon-180.webp" alt="" width="180" height="179" decoding="async">
         </div>
@@ -324,7 +326,9 @@
       <section class="experience-section reveal" id="experiences" aria-label="Ville local experiences">
         <div class="local-gifts-experience">
           <figure class="local-gifts-video">
-            <video class="local-gifts-experience-video" autoplay muted loop playsinline disablepictureinpicture preload="none" aria-label="Ville in-person activation video" data-video-src="Ref/optimized/video/experiences-we-remember.mp4"></video>
+            <video class="local-gifts-experience-video" autoplay muted defaultmuted loop playsinline webkit-playsinline disablepictureinpicture preload="auto" aria-label="Ville in-person activation video" src="Ref/optimized/video/experiences-we-remember.mp4">
+              <source src="Ref/optimized/video/experiences-we-remember.mp4" type="video/mp4">
+            </video>
             <figcaption>Experiences You Remember</figcaption>
           </figure>
           <div class="local-gifts-experience-copy">
@@ -545,25 +549,17 @@ document.addEventListener('keydown', (event) => {
 const revealItems = document.querySelectorAll('.reveal');
 document.querySelector('.hero-live')?.classList.add('is-visible');
 
-const hydrateVideo = (video) => {
-  const videoSrc = video?.dataset.videoSrc;
-  if (!video || !videoSrc) return;
-
+const primeVideo = (video) => {
+  if (!video) return;
   video.muted = true;
   video.defaultMuted = true;
   video.loop = true;
   video.autoplay = true;
   video.playsInline = true;
+  video.setAttribute('playsinline', '');
+  video.setAttribute('webkit-playsinline', '');
   video.controls = false;
   video.removeAttribute('controls');
-
-  if (!video.querySelector('source')) {
-    const source = document.createElement('source');
-    source.src = videoSrc;
-    source.type = 'video/mp4';
-    video.append(source);
-    video.load();
-  }
 
   const keepPlaying = () => {
     if (document.visibilityState === 'hidden') return;
@@ -571,44 +567,22 @@ const hydrateVideo = (video) => {
   };
 
   keepPlaying();
+  video.addEventListener('canplay', keepPlaying, { once: true });
   video.addEventListener('pause', keepPlaying);
   video.addEventListener('ended', keepPlaying);
 };
 
-const queueHeroVideo = () => {
-  const heroVideo = document.querySelector('.hero-app-video[data-video-src]');
-  if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(() => hydrateVideo(heroVideo), { timeout: 1600 });
-  } else {
-    window.setTimeout(() => hydrateVideo(heroVideo), 800);
-  }
+const primeAutoplayVideos = () => {
+  document.querySelectorAll('.hero-app-video, .local-gifts-experience-video').forEach(primeVideo);
 };
 
-if (document.readyState === 'complete') {
-  queueHeroVideo();
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', primeAutoplayVideos, { once: true });
 } else {
-  window.addEventListener('load', queueHeroVideo, { once: true });
+  primeAutoplayVideos();
 }
-
-const deferredVideos = Array.from(document.querySelectorAll('video[data-video-src]')).filter(
-  (video) => !video.classList.contains('hero-app-video')
-);
-
-if (deferredVideos.length) {
-  if ('IntersectionObserver' in window) {
-    const videoObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        hydrateVideo(entry.target);
-        videoObserver.unobserve(entry.target);
-      });
-    }, { rootMargin: '360px 0px' });
-
-    deferredVideos.forEach((video) => videoObserver.observe(video));
-  } else {
-    deferredVideos.forEach((video) => window.setTimeout(() => hydrateVideo(video), 1400));
-  }
-}
+window.addEventListener('pageshow', primeAutoplayVideos);
+document.addEventListener('visibilitychange', primeAutoplayVideos);
 
 if ('IntersectionObserver' in window && !reduceMotion.matches) {
   const revealObserver = new IntersectionObserver(
