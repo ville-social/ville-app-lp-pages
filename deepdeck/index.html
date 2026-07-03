@@ -31,6 +31,18 @@
         --cream: #fffaf2;
         --soft: #f7f1e7;
         --line: rgba(15, 18, 20, 0.14);
+        --panel-text: var(--ink);
+        --header-bg: rgba(255, 250, 242, 0.9);
+        --header-hover: rgba(15, 18, 20, 0.08);
+        --nav-cta-bg: var(--ink);
+        --nav-cta-text: var(--cream);
+        --brand-filter: brightness(0) saturate(100%);
+        --shadow: 0 6px 28px rgba(24, 29, 31, 0.18);
+        --wide: 1440px;
+        --nav-margin: 24px;
+        --nav-container-inset: calc(var(--nav-margin) * 0.333333);
+        --nav-width: min(calc(100% - (var(--nav-margin) * 2)), calc(var(--wide) - (var(--nav-container-inset) * 2)));
+        --motion-out: cubic-bezier(0.16, 1, 0.3, 1);
       }
 
       * { box-sizing: border-box; }
@@ -57,6 +69,159 @@
       a { color: inherit; }
       a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid rgba(15, 18, 20, 0.34); outline-offset: 4px; }
 
+      .skip-link {
+        position: absolute;
+        top: 12px;
+        left: -999px;
+        z-index: 20;
+        padding: 10px 14px;
+        border-radius: 8px;
+        background: var(--cream);
+        color: var(--ink);
+      }
+
+      .skip-link:focus {
+        left: 12px;
+      }
+
+      .site-header {
+        position: fixed;
+        top: var(--nav-margin);
+        left: 50%;
+        z-index: 10;
+        display: grid;
+        grid-template-columns: 48px minmax(0, 1fr) auto;
+        grid-template-areas: "toggle brand cta" "nav nav nav";
+        align-items: center;
+        width: var(--nav-width);
+        min-height: 58px;
+        padding: 7px;
+        row-gap: 0;
+        column-gap: 8px;
+        border-radius: 28px;
+        background: var(--header-bg);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(12px);
+        transform: translateX(-50%);
+      }
+
+      .menu-toggle {
+        appearance: none;
+        position: relative;
+        z-index: 2;
+        display: inline-grid;
+        width: 44px;
+        height: 44px;
+        grid-area: toggle;
+        place-content: center;
+        align-self: center;
+        justify-self: start;
+        border: 0;
+        background: transparent;
+        color: var(--panel-text);
+        cursor: pointer;
+      }
+
+      .menu-toggle-icon {
+        display: inline-block;
+        width: 38px;
+        height: 38px;
+        background: currentColor;
+        color: currentColor;
+        mask: url("../Ref/icons/sf/line.3.horizontal.png") center / contain no-repeat;
+        -webkit-mask: url("../Ref/icons/sf/line.3.horizontal.png") center / contain no-repeat;
+      }
+
+      .brand {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 1;
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-self: center;
+        padding: 0 8px;
+        border-radius: 999px;
+        transform: translate(-50%, -50%);
+      }
+
+      .site-header.is-menu-open .brand {
+        top: 29px;
+      }
+
+      .brand:hover,
+      .brand:focus-visible {
+        background: var(--header-hover);
+      }
+
+      .brand img {
+        width: auto;
+        height: 30px;
+        filter: var(--brand-filter);
+        transform: translateY(-4px);
+      }
+
+      .nav-links {
+        display: grid;
+        max-height: 0;
+        grid-area: nav;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 6px;
+        overflow: hidden;
+        padding-top: 0;
+        opacity: 0;
+        pointer-events: none;
+        transition: max-height 220ms var(--motion-out), opacity 180ms ease, padding-top 180ms ease;
+      }
+
+      .site-header.is-menu-open .nav-links {
+        max-height: 74px;
+        padding-top: 6px;
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .nav-links a {
+        display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        background: rgba(15, 18, 20, 0.06);
+        color: inherit;
+        font-size: 0.94rem;
+        font-weight: 650;
+        text-decoration: none;
+      }
+
+      .nav-links a:hover,
+      .nav-links a:focus-visible {
+        background: var(--header-hover);
+      }
+
+      .nav-actions {
+        display: inline-flex;
+        grid-area: cta;
+        justify-self: end;
+      }
+
+      .nav-cta {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+        padding: 0 15px;
+        border-radius: 999px;
+        background: var(--nav-cta-bg);
+        color: var(--nav-cta-text);
+        font-size: clamp(0.92rem, 3.6vw, 1rem);
+        font-weight: 500;
+        line-height: 1.1;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
       .deck-shell {
         width: min(calc(100% - 24px), 1440px);
         min-height: calc(100svh - 24px);
@@ -64,63 +229,6 @@
         overflow: hidden;
         border-radius: 32px;
         background: var(--orange);
-      }
-
-      .deck-nav {
-        position: fixed;
-        top: 24px;
-        left: 50%;
-        z-index: 10;
-        display: grid;
-        width: min(calc(100% - 48px), 1360px);
-        min-height: 58px;
-        grid-template-columns: 120px minmax(0, 1fr) 120px;
-        align-items: center;
-        padding: 7px;
-        border-radius: 28px;
-        background: rgba(255, 250, 242, 0.9);
-        box-shadow: 0 6px 28px rgba(24, 29, 31, 0.18);
-        backdrop-filter: blur(12px);
-        transform: translateX(-50%);
-      }
-
-      .deck-brand {
-        display: inline-flex;
-        min-height: 44px;
-        align-items: center;
-        justify-self: center;
-        grid-column: 2;
-      }
-
-      .deck-brand img {
-        width: auto;
-        height: 30px;
-        filter: brightness(0) saturate(100%);
-        transform: translateY(-4px);
-      }
-
-      .deck-back, .deck-cta {
-        display: inline-flex;
-        min-height: 44px;
-        align-items: center;
-        justify-content: center;
-        border-radius: 999px;
-        font-size: 0.96rem;
-        font-weight: 720;
-        text-decoration: none;
-        white-space: nowrap;
-      }
-
-      .deck-back {
-        justify-self: start;
-        padding: 0 14px;
-      }
-
-      .deck-cta {
-        justify-self: end;
-        padding: 0 16px;
-        background: var(--ink);
-        color: var(--cream);
       }
 
       .deck-hero {
@@ -219,32 +327,31 @@
       }
 
       @media (max-width: 860px) {
+        :root {
+          --nav-margin: 10px;
+        }
+
+        .site-header {
+          width: var(--nav-width);
+        }
+
+        .site-header.is-menu-open .nav-links {
+          max-height: 262px;
+        }
+
+        .nav-links {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-links a {
+          min-height: 44px;
+        }
+
         .deck-shell {
           width: 100%;
           min-height: 100svh;
           margin: 0;
           border-radius: 0 0 24px 24px;
-        }
-
-        .deck-nav {
-          top: 10px;
-          width: calc(100% - 20px);
-          grid-template-columns: 78px minmax(0, 1fr) 92px;
-        }
-
-        .deck-back {
-          font-size: 0;
-        }
-
-        .deck-back::before {
-          content: "<";
-          font-size: 1.35rem;
-          line-height: 1;
-        }
-
-        .deck-cta {
-          padding: 0 14px;
-          font-size: 0.92rem;
         }
 
         .deck-hero {
@@ -290,15 +397,28 @@
     <script src="../Ref/deepdeck/deepdeck-popup.js" defer></script>
   </head>
   <body>
-    <header class="deck-nav" aria-label="Site header">
-      <a class="deck-back" href="../">Ville</a>
-      <a class="deck-brand" href="../" aria-label="Ville home">
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header site-header-simple" aria-label="Site header">
+      <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-navigation">
+        <span class="menu-toggle-icon" aria-hidden="true"></span>
+      </button>
+      <a class="brand" href="../" aria-label="Ville home">
         <img src="../Ref/ville-wordmark.svg" alt="Ville" width="2859" height="1233" decoding="async">
       </a>
-      <a class="deck-cta" href="#signup">Join list</a>
+      <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
+        <a href="../#features">Features</a>
+        <a href="../#local-gifts">Local Gifts</a>
+        <a href="../#about">About</a>
+        <a href="../#download">Download</a>
+        <a href="./">Deep Deck</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="nav-cta" href="../#download">Get App</a>
+      </div>
     </header>
 
-    <main class="deck-shell">
+    <main class="deck-shell" id="main">
       <section class="deck-hero" aria-labelledby="deepdeck-title">
         <div class="deck-copy">
           <p class="deck-kicker">Deep Deck by Ville</p>
@@ -337,5 +457,28 @@
     </main>
 
     <p class="deck-note">Deep Deck is made by Ville Technologies. By submitting your email, you agree to receive Deep Deck launch updates.</p>
+    <script>
+      const siteHeader = document.querySelector('.site-header');
+      const menuToggle = siteHeader?.querySelector('.menu-toggle');
+
+      const setMenuOpen = (isOpen) => {
+        if (!siteHeader || !menuToggle) return;
+        siteHeader.classList.toggle('is-menu-open', isOpen);
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+        menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+      };
+
+      menuToggle?.addEventListener('click', () => {
+        setMenuOpen(menuToggle.getAttribute('aria-expanded') !== 'true');
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') setMenuOpen(false);
+      });
+
+      document.querySelectorAll('.nav-links a, .brand, .nav-cta').forEach((link) => {
+        link.addEventListener('click', () => setMenuOpen(false));
+      });
+    </script>
   </body>
 </html>
