@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-deepdeck-endpoint="/deepdeck-signup">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#ffab32">
+    <title>Deep Deck by Ville</title>
+    <meta name="description" content="Deep Deck is a pocket card game from Ville for getting past small talk. Add your email for launch updates.">
+    <link rel="canonical" href="https://ville.social/deepdeck/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Ville">
+    <meta property="og:title" content="Deep Deck by Ville">
+    <meta property="og:description" content="Conversation cards for getting past small talk.">
+    <meta property="og:url" content="https://ville.social/deepdeck/">
+    <meta property="og:image" content="https://ville.social/Ref/optimized/deepdeck/deepdeck-og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Deep Deck by Ville">
+    <meta name="twitter:description" content="Conversation cards for getting past small talk.">
+    <meta name="twitter:image" content="https://ville.social/Ref/optimized/deepdeck/deepdeck-og.jpg">
+    <link rel="icon" type="image/png" href="../Ref/favicons/ville-icon-favicon-dot.png">
+    <link rel="preload" as="image" href="../Ref/optimized/deepdeck/deck-in-tin-1326.webp">
+    <link rel="stylesheet" href="../Ref/deepdeck/deepdeck-popup.css">
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #0f1214;
+        --muted: rgba(15, 18, 20, 0.66);
+        --orange: #ffab32;
+        --cream: #fffaf2;
+        --soft: #f7f1e7;
+        --line: rgba(15, 18, 20, 0.14);
+      }
+
+      * { box-sizing: border-box; }
+
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--orange);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 560;
+        line-height: 1.45;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: geometricPrecision;
+      }
+
+      img { display: block; max-width: 100%; height: auto; }
+      a { color: inherit; }
+      a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid rgba(15, 18, 20, 0.34); outline-offset: 4px; }
+
+      .deck-shell {
+        width: min(calc(100% - 24px), 1440px);
+        min-height: calc(100svh - 24px);
+        margin: 12px auto;
+        overflow: hidden;
+        border-radius: 32px;
+        background: var(--orange);
+      }
+
+      .deck-nav {
+        position: fixed;
+        top: 24px;
+        left: 50%;
+        z-index: 10;
+        display: grid;
+        width: min(calc(100% - 48px), 1360px);
+        min-height: 58px;
+        grid-template-columns: 120px minmax(0, 1fr) 120px;
+        align-items: center;
+        padding: 7px;
+        border-radius: 28px;
+        background: rgba(255, 250, 242, 0.9);
+        box-shadow: 0 6px 28px rgba(24, 29, 31, 0.18);
+        backdrop-filter: blur(12px);
+        transform: translateX(-50%);
+      }
+
+      .deck-brand {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-self: center;
+        grid-column: 2;
+      }
+
+      .deck-brand img {
+        width: auto;
+        height: 30px;
+        filter: brightness(0) saturate(100%);
+        transform: translateY(-4px);
+      }
+
+      .deck-back, .deck-cta {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        font-size: 0.96rem;
+        font-weight: 720;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .deck-back {
+        justify-self: start;
+        padding: 0 14px;
+      }
+
+      .deck-cta {
+        justify-self: end;
+        padding: 0 16px;
+        background: var(--ink);
+        color: var(--cream);
+      }
+
+      .deck-hero {
+        display: grid;
+        min-height: calc(100svh - 24px);
+        grid-template-columns: minmax(0, 0.92fr) minmax(320px, 1.08fr);
+        gap: clamp(28px, 5vw, 80px);
+        align-items: center;
+        padding: clamp(112px, 13vh, 156px) clamp(26px, 6vw, 90px) clamp(54px, 7vw, 96px);
+      }
+
+      .deck-copy {
+        max-width: 720px;
+      }
+
+      .deck-kicker {
+        margin: 0 0 18px;
+        font-size: 0.9rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 720px;
+        margin: 0;
+        font-size: clamp(4.2rem, 6.2vw, 5.8rem);
+        font-weight: 760;
+        letter-spacing: -0.02em;
+        line-height: 0.94;
+      }
+
+      .deck-copy > p {
+        max-width: 620px;
+        margin: 24px 0 0;
+        color: rgba(15, 18, 20, 0.76);
+        font-size: clamp(1.12rem, 2vw, 1.58rem);
+        font-weight: 620;
+        line-height: 1.28;
+        text-wrap: balance;
+      }
+
+      .deck-form-wrap {
+        max-width: 560px;
+        margin-top: 34px;
+      }
+
+      .deck-form-wrap .dd-signup-form {
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+
+      .deck-proof {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 24px;
+        padding: 0;
+        list-style: none;
+      }
+
+      .deck-proof li {
+        display: inline-flex;
+        min-height: 38px;
+        align-items: center;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 250, 242, 0.28);
+        font-size: 0.94rem;
+        font-weight: 760;
+      }
+
+      .deck-visual {
+        position: relative;
+        display: grid;
+        align-self: stretch;
+        place-items: end center;
+        min-height: 560px;
+      }
+
+      .deck-visual img {
+        width: auto;
+        max-width: min(100%, 680px);
+        max-height: min(760px, calc(100svh - 170px));
+        filter: drop-shadow(0 30px 44px rgba(15, 18, 20, 0.2));
+        transform: rotate(3deg);
+      }
+
+      .deck-note {
+        width: min(calc(100% - 24px), 1440px);
+        margin: 0 auto 12px;
+        padding: 0 12px;
+        color: rgba(15, 18, 20, 0.62);
+        font-size: 0.86rem;
+        text-align: center;
+      }
+
+      @media (max-width: 860px) {
+        .deck-shell {
+          width: 100%;
+          min-height: 100svh;
+          margin: 0;
+          border-radius: 0 0 24px 24px;
+        }
+
+        .deck-nav {
+          top: 10px;
+          width: calc(100% - 20px);
+          grid-template-columns: 78px minmax(0, 1fr) 92px;
+        }
+
+        .deck-back {
+          font-size: 0;
+        }
+
+        .deck-back::before {
+          content: "<";
+          font-size: 1.35rem;
+          line-height: 1;
+        }
+
+        .deck-cta {
+          padding: 0 14px;
+          font-size: 0.92rem;
+        }
+
+        .deck-hero {
+          grid-template-columns: 1fr;
+          gap: 26px;
+          padding: 104px 20px 44px;
+          text-align: center;
+        }
+
+        .deck-copy,
+        .deck-copy > p,
+        .deck-form-wrap {
+          margin-right: auto;
+          margin-left: auto;
+        }
+
+        h1 {
+          margin-right: auto;
+          margin-left: auto;
+          font-size: clamp(2.8rem, 13.5vw, 3.75rem);
+        }
+
+        .deck-form-wrap .dd-signup-form {
+          grid-template-columns: 1fr;
+        }
+
+        .deck-proof {
+          justify-content: center;
+        }
+
+        .deck-visual {
+          min-height: 0;
+          order: -1;
+          padding-top: 8px;
+        }
+
+        .deck-visual img {
+          width: min(74vw, 340px);
+          transform: rotate(2deg);
+        }
+      }
+    </style>
+    <script src="../Ref/deepdeck/deepdeck-popup.js" defer></script>
+  </head>
+  <body>
+    <header class="deck-nav" aria-label="Site header">
+      <a class="deck-back" href="../">Ville</a>
+      <a class="deck-brand" href="../" aria-label="Ville home">
+        <img src="../Ref/ville-wordmark.svg" alt="Ville" width="2859" height="1233" decoding="async">
+      </a>
+      <a class="deck-cta" href="#signup">Join list</a>
+    </header>
+
+    <main class="deck-shell">
+      <section class="deck-hero" aria-labelledby="deepdeck-title">
+        <div class="deck-copy">
+          <p class="deck-kicker">Deep Deck by Ville</p>
+          <h1 id="deepdeck-title">Cards for deeper conversation.</h1>
+          <p>Play at your own risk. Deep Deck pushes strangers closer and pulls friends deeper.</p>
+
+          <div class="deck-form-wrap" id="signup">
+            <form class="dd-signup-form" data-deepdeck-signup>
+              <label for="deepdeck-email">Email</label>
+              <input id="deepdeck-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>
+              <input class="dd-hp" name="company" tabindex="-1" autocomplete="off">
+              <button type="submit">Get updates</button>
+            </form>
+            <p class="dd-form-status" data-deepdeck-status aria-live="polite"></p>
+          </div>
+
+          <ul class="deck-proof" aria-label="Deep Deck details">
+            <li>2-6 players</li>
+            <li>Ages 15+</li>
+            <li>Pocket tin</li>
+          </ul>
+        </div>
+
+        <figure class="deck-visual">
+          <img
+            src="../Ref/optimized/deepdeck/deck-in-tin-1326.webp"
+            srcset="../Ref/optimized/deepdeck/deck-in-tin-900.webp 900w, ../Ref/optimized/deepdeck/deck-in-tin-1326.webp 1326w"
+            sizes="(max-width: 860px) 88vw, 48vw"
+            alt="Deep Deck conversation card game in a yellow tin"
+            width="1326"
+            height="1920"
+            decoding="async"
+            fetchpriority="high">
+        </figure>
+      </section>
+    </main>
+
+    <p class="deck-note">Deep Deck is made by Ville Technologies. By submitting your email, you agree to receive Deep Deck launch updates.</p>
+  </body>
+</html>
