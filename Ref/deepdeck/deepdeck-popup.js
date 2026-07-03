@@ -2,7 +2,7 @@
   const scriptUrl = document.currentScript?.src || '';
   const assetBase = scriptUrl ? new URL('.', scriptUrl).href : 'Ref/deepdeck/';
   const imageUrl = new URL('../optimized/deepdeck/deck-in-tin-900.webp', assetBase).href;
-  const endpoint = document.documentElement.dataset.deepdeckEndpoint || '/deepdeck-signup';
+  const endpoint = document.documentElement.dataset.deepdeckEndpoint || 'https://us-central1-ville-9fe9d.cloudfunctions.net/deepDeckSignup';
   const isDeepDeckPage = window.location.pathname.includes('/deepdeck');
   const submittedKey = 'ville.deepdeck.signup.submitted';
   const dismissedKey = 'ville.deepdeck.popup.dismissedUntil';
