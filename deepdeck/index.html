@@ -103,6 +103,7 @@
         box-shadow: var(--shadow);
         backdrop-filter: blur(12px);
         transform: translateX(-50%);
+        transition: border-radius 180ms ease, width 180ms ease;
       }
 
       .menu-toggle {
@@ -138,12 +139,15 @@
         left: 50%;
         z-index: 1;
         display: inline-flex;
+        grid-column: 1 / -1;
+        grid-row: 1;
         min-height: 44px;
         align-items: center;
         justify-self: center;
         padding: 0 8px;
         border-radius: 999px;
         transform: translate(-50%, -50%);
+        transition: background-color 160ms ease, opacity 160ms ease;
       }
 
       .site-header.is-menu-open .brand {
@@ -241,7 +245,9 @@
       }
 
       .deck-copy {
+        width: 100%;
         max-width: 720px;
+        min-width: 0;
       }
 
       .deck-kicker {
@@ -371,7 +377,10 @@
         h1 {
           margin-right: auto;
           margin-left: auto;
-          font-size: clamp(2.8rem, 13.5vw, 3.75rem);
+          max-width: min(100%, 420px);
+          font-size: 3.35rem;
+          line-height: 0.98;
+          text-wrap: balance;
         }
 
         .deck-form-wrap .dd-signup-form {
@@ -391,6 +400,18 @@
         .deck-visual img {
           width: min(74vw, 340px);
           transform: rotate(2deg);
+        }
+      }
+
+      @media (max-width: 430px) {
+        h1 {
+          max-width: 320px;
+          font-size: 2.85rem;
+        }
+
+        .deck-copy > p {
+          max-width: 340px;
+          font-size: 1.05rem;
         }
       }
     </style>
@@ -430,7 +451,7 @@
               <label for="deepdeck-email">Email</label>
               <input id="deepdeck-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>
               <input class="dd-hp" name="company" tabindex="-1" autocomplete="off">
-              <button type="submit">Get updates</button>
+              <button type="submit">Join the waitlist</button>
             </form>
             <p class="dd-form-status" data-deepdeck-status aria-live="polite"></p>
           </div>

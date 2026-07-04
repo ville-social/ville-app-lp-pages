@@ -103,7 +103,7 @@
             <label for="deepdeck-popup-email">Email</label>
             <input id="deepdeck-popup-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>
             <input class="dd-hp" name="company" tabindex="-1" autocomplete="off">
-            <button type="submit">Join</button>
+            <button type="submit">Join the waitlist</button>
           </form>
           <p class="dd-form-status" data-deepdeck-status aria-live="polite"></p>
           <a class="dd-popup-link" href="${new URL('../../deepdeck/', assetBase).href}">See Deep Deck</a>
