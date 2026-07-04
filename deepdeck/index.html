@@ -284,6 +284,7 @@
       }
 
       .deck-form-wrap {
+        width: min(100%, 560px);
         max-width: 560px;
         margin-top: 34px;
       }
@@ -385,6 +386,11 @@
         .deck-form-wrap {
           margin-right: auto;
           margin-left: auto;
+        }
+
+        .deck-form-wrap {
+          width: min(calc(100% - 24px), 380px);
+          max-width: none;
         }
 
         h1 {
