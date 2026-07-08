@@ -53,7 +53,7 @@
   z-index: 1;
   display: grid;
   width: min(920px, 100%);
-  max-height: min(720px, calc(100svh - 36px));
+  max-height: min(720px, calc(100dvh - 36px));
   grid-template-columns: minmax(0, 0.84fr) minmax(0, 1fr);
   overflow: hidden;
   border-radius: 28px;
@@ -205,26 +205,62 @@
 }
 
 @media (max-width: 760px) {
+  .dd-popup {
+    padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+  }
+
   .dd-popup-panel {
-    max-height: calc(100svh - 24px);
+    height: min(700px, calc(100dvh - 24px));
+    max-height: none;
     grid-template-columns: 1fr;
-    overflow-y: auto;
+    grid-template-rows: minmax(178px, 39%) minmax(0, 1fr);
+    overflow: hidden;
     border-radius: 24px;
   }
 
+  .dd-popup-close {
+    position: fixed;
+    top: max(14px, env(safe-area-inset-top));
+    right: max(14px, env(safe-area-inset-right));
+    background: rgba(255, 250, 242, 0.96);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+  }
+
   .dd-popup-media {
-    min-height: 280px;
+    min-height: 0;
+    place-items: end center;
   }
 
   .dd-popup-media img {
-    width: min(82vw, 360px);
-    margin-bottom: -34px;
+    width: min(68vw, 292px);
+    margin-bottom: -26px;
   }
 
   .dd-popup-content {
     align-items: center;
-    padding: 32px 24px 28px;
+    justify-content: start;
+    min-height: 0;
+    padding: clamp(18px, 3dvh, 28px) 22px 18px;
     text-align: center;
+  }
+
+  .dd-popup-kicker {
+    margin-bottom: 8px;
+    font-size: 0.72rem;
+    letter-spacing: 0.07em;
+  }
+
+  .dd-popup h2 {
+    max-width: 330px;
+    font-size: clamp(2rem, 9vw, 2.72rem);
+    line-height: 0.96;
+  }
+
+  .dd-popup p {
+    max-width: 330px;
+    margin-top: 12px;
+    font-size: 0.95rem;
+    line-height: 1.24;
   }
 
   .dd-popup h2,
@@ -236,7 +272,28 @@
   .dd-signup-form {
     width: 100%;
     max-width: 390px;
+    gap: 7px;
+    margin-top: 16px;
     grid-template-columns: 1fr;
+  }
+
+  .dd-signup-form input[type="email"] {
+    height: 48px;
+  }
+
+  .dd-signup-form button {
+    min-height: 48px;
+  }
+
+  .dd-form-status {
+    min-height: 1.1em;
+    margin-top: 8px;
+    font-size: 0.86rem;
+  }
+
+  .dd-popup-link {
+    margin-top: 8px;
+    font-size: 0.88rem;
   }
 
   .dd-popup-trigger {
@@ -245,5 +302,130 @@
     min-height: 42px;
     padding: 0 15px;
     font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 760px) and (max-height: 650px) {
+  .dd-popup-panel {
+    grid-template-rows: minmax(132px, 34%) minmax(0, 1fr);
+  }
+
+  .dd-popup-media img {
+    width: min(57vw, 226px);
+    margin-bottom: -22px;
+  }
+
+  .dd-popup-content {
+    padding: 14px 20px 14px;
+  }
+
+  .dd-popup-kicker {
+    margin-bottom: 6px;
+    font-size: 0.68rem;
+  }
+
+  .dd-popup h2 {
+    max-width: 300px;
+    font-size: clamp(1.72rem, 8.2vw, 2.18rem);
+  }
+
+  .dd-popup p {
+    margin-top: 8px;
+    font-size: 0.86rem;
+    line-height: 1.18;
+  }
+
+  .dd-signup-form {
+    margin-top: 12px;
+  }
+
+  .dd-signup-form input[type="email"] {
+    height: 44px;
+  }
+
+  .dd-signup-form button {
+    min-height: 44px;
+  }
+
+  .dd-popup-link,
+  .dd-form-status {
+    margin-top: 6px;
+  }
+}
+
+@media (min-width: 761px) and (max-height: 640px) {
+  .dd-popup {
+    padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+  }
+
+  .dd-popup-panel {
+    width: min(760px, 100%);
+    height: calc(100dvh - 24px);
+    max-height: calc(100dvh - 24px);
+    grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+    overflow: hidden;
+  }
+
+  .dd-popup-media {
+    min-height: 0;
+    place-items: end center;
+  }
+
+  .dd-popup-media img {
+    width: min(34vw, 250px);
+    margin-bottom: -20px;
+  }
+
+  .dd-popup-content {
+    padding: 20px 38px 18px;
+  }
+
+  .dd-popup-kicker {
+    margin-bottom: 8px;
+    font-size: 0.7rem;
+  }
+
+  .dd-popup h2 {
+    max-width: 360px;
+    font-size: clamp(2rem, 4.8vw, 2.55rem);
+    line-height: 0.96;
+  }
+
+  .dd-popup p {
+    max-width: 360px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    line-height: 1.2;
+  }
+
+  .dd-signup-form {
+    margin-top: 14px;
+  }
+
+  .dd-signup-form input[type="email"] {
+    height: 44px;
+  }
+
+  .dd-signup-form button {
+    min-height: 44px;
+  }
+
+  .dd-form-status {
+    min-height: 1em;
+    margin-top: 6px;
+    font-size: 0.82rem;
+  }
+
+  .dd-popup-link {
+    margin-top: 6px;
+    font-size: 0.82rem;
+  }
+
+  .dd-popup-close {
+    position: fixed;
+    top: max(14px, env(safe-area-inset-top));
+    right: max(14px, env(safe-area-inset-right));
+    background: rgba(255, 250, 242, 0.96);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
   }
 }
